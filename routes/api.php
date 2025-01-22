@@ -15,13 +15,20 @@ use App\Http\Controllers\Api\AuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 Route::prefix('v1')->group(function () {
 
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
+Route::middleware(['auth', 'user'])->group(function () {
+    Route::get('/user/details', [AuthController::class, 'details']);
+});
+
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
+});
 });

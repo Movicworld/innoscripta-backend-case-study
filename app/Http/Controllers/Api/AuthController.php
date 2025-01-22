@@ -6,6 +6,7 @@ use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -72,7 +73,26 @@ class AuthController extends Controller
 
         return response()->json([
             'status' => false,
-            'message' => 'Unauthorized'
+            'message' => 'Incorrect Credentials'
+        ], 401);
+    }
+
+    //   Get user details.
+    public function details()
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            return response()->json([
+                'status' => true,
+                'message' => 'User details retrieved successfully.',
+                'data' => $user,
+            ]);
+        }
+
+        return response()->json([
+            'status' => false,
+            'message' => 'User not authenticated.',
         ], 401);
     }
 }

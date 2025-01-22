@@ -53,9 +53,6 @@ class AuthService
             ];
         }
 
-        return [
-            'status' => false,
-            'message' => 'Invalid email or password.',
-        ];
+        return false;
     }
 }
