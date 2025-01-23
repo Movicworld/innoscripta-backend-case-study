@@ -6,13 +6,13 @@ use App\Helpers\HttpClientHelper;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use Exception;
-use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
 
 class NewYorkTimesService
 {
-    protected $httpClient, $articleRepository, $categoryRepository;
-
+    protected $httpClient;
+    protected $articleRepository;
+    protected $categoryRepository;
     public function __construct(
         HttpClientHelper $httpClient,
         ArticleRepository $articleRepository,
@@ -23,6 +23,7 @@ class NewYorkTimesService
         $this->categoryRepository = $categoryRepository;
     }
 
+    // Fetch Articles New York Times API
     public function fetchNews()
     {
         $categories = $this->categoryRepository->getCategories();

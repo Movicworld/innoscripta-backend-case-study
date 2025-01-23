@@ -10,18 +10,22 @@ use App\Services\NewsSources\TheGuardianService;
 
 class ArticleController extends Controller
 {
-    protected $newYorkTimesService, $newsAPIService, $theGuardianService;
+    protected $newYorkTimesService;
+    protected $newsAPIService;
+    protected $theGuardianService;
 
-    public function __construct(NewYorkTimesService $newYorkTimesService,
-    NewsAPIService $newsAPIService,
-    TheGuardianService $theGuardianService)
-    {
+    public function __construct(
+        NewYorkTimesService $newYorkTimesService,
+        NewsAPIService $newsAPIService,
+        TheGuardianService $theGuardianService
+    ) {
         $this->newYorkTimesService = $newYorkTimesService;
         $this->newsAPIService = $newsAPIService;
         $this->theGuardianService = $theGuardianService;
     }
 
-    public function news(){
+    public function news()
+    {
         //return $this->newYorkTimesService->fetchNews();
         //return $this->newsAPIService->fetchNews();
         return $this->theGuardianService->fetchNews();

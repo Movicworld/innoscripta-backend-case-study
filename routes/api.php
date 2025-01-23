@@ -44,7 +44,7 @@ Route::prefix(
     ])->prefix(
         'admin'
     )->group(function () {
-        Route::post('/create/news-api/credentials', [AdminController::class, 'storeNewsApiCredentials']);
+        Route::post('/add/category', [AdminController::class, 'createCategory']);
         Route::get('/news', [AdminController::class, 'getSourceNews']);
         Route::get('/users/preferences/{id}', [AdminController::class, 'getUsersWithPreferences']);
         Route::get('/details', [AdminController::class, 'getAdminDetails']);

@@ -37,7 +37,7 @@ class FetchArticles extends Command
         $this->newYorkTimesService->fetchNews();
         $this->theGuardianService->fetchNews();
         $this->newsAPIService->fetchNews();
-        $this->newCredService->fetchNews();
+       // $this->newCredService->fetchNews();
         $this->info('News update completed.');
     }
 }

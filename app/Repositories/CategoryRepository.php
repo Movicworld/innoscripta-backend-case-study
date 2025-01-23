@@ -11,15 +11,9 @@ class CategoryRepository
         return Category::all();
     }
 
-
-    public function saveArticle($data)
+     public function create(array $data)
     {
-        Category::create([
-            'name' => $data['name'],
-            'description' => $data['description'],
-        ]);
-
-        return true;
+        return Category::create($data);
     }
 
 }

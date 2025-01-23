@@ -1,10 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Api\Admin;
-
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Services\Admin\AdminServices;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,30 +16,31 @@ class AdminController extends Controller
         $this->adminService = $adminService;
     }
 
-    public function storeNewsApiCredentials(Request $request)
-    {
-        $validator =  Validator::make($request->all(), [
-            'api_name' => 'required|string',
-            'api_key' => 'required|string',
-            'secret_key' => 'nullable|string',
-        ]);
 
+    public function createCategory(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|unique:categories,name',
+            'description' => 'required|string',
+        ]);
         if ($validator->fails()) {
             return response()->json([
                 'status' => false,
                 'message' => $validator->errors()
             ], 400);
         }
-        $this->adminService->storeNewsApiCredentials($request->api_name, $request->api_key);
 
-        return response()->json([
-            'status' => true,
-            'message' => 'API credentials stored successfully.',
-        ]);
+        try {
+            $category = $this->adminService->createCategory($validator->validated());
+            return response()->json(['message' => 'Category created successfully', 'data' => $category], 201);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Failed to create category', 'message' => $e->getMessage()], 500);
+        }
     }
 
     public function getSourceNews()
     {
+
         try {
             $news = $this->adminService->getSourceNews();
 

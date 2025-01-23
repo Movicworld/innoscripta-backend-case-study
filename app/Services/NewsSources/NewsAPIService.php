@@ -9,8 +9,9 @@ use Illuminate\Support\Facades\Log;
 
 class NewsAPIService
 {
-    protected $httpClient, $articleRepository, $categoryRepository;
-
+    protected $httpClient;
+    protected $articleRepository;
+    protected $categoryRepository;
     public function __construct(
         HttpClientHelper $httpClient,
         ArticleRepository $articleRepository,
@@ -21,6 +22,7 @@ class NewsAPIService
         $this->categoryRepository = $categoryRepository;
     }
 
+    // Fetch Articles from NewsAPI.org API
     public function fetchNews()
     {
         $categories = $this->categoryRepository->getCategories();
@@ -71,5 +73,4 @@ class NewsAPIService
 
         return true;
     }
-
 }

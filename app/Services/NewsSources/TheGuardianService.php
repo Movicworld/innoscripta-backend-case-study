@@ -10,8 +10,9 @@ use Illuminate\Support\Facades\Log;
 
 class TheGuardianService
 {
-    protected $httpClient, $articleRepository, $categoryRepository;
-
+    protected $httpClient;
+    protected $articleRepository;
+    protected $categoryRepository;
     public function __construct(HttpClientHelper $httpClient,
     ArticleRepository $articleRepository,
     CategoryRepository $categoryRepository)
@@ -21,6 +22,7 @@ class TheGuardianService
         $this->categoryRepository = $categoryRepository;
     }
 
+    // Fetch Articles from The Guardian API
     public function fetchNews()
     {
         $categories = $this->categoryRepository->getCategories();

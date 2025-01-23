@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\UserRepository;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\PersonalAccessTokenResult;
@@ -31,7 +32,7 @@ class AuthService
                     'password' => $data['password'],
                 ]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return [
                 'status' => false,
                 'message' => 'User registration failed: ' . $e->getMessage(),
@@ -48,7 +49,7 @@ class AuthService
             $token = $user->createToken('Innoscripta')->accessToken;
 
             return $data = [
-                'user' => $user,
+                'role' => $user->role,
                 'token' => $token,
             ];
         }
