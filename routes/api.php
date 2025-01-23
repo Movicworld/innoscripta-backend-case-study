@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\ArticleController;
+use App\Http\Controllers\Api\Admin\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,16 +21,32 @@ use App\Http\Controllers\Api\AuthController;
 //     return $request->user();
 // });
 
-Route::prefix('v1')->group(function () {
+Route::prefix(
+    'v1'
+)->group(function () {
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::get('/get-news', [ArticleController::class, 'news']);
 
-Route::middleware(['auth', 'user'])->group(function () {
-    Route::get('/user/details', [AuthController::class, 'details']);
-});
+    Route::middleware([
+        'auth',
+        'user'
+    ])->prefix(
+        'user'
+    )->group(function () {
+        Route::get('/details', [AuthController::class, 'details']);
+    });
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
-});
+    Route::middleware([
+        'auth:api',
+        'admin'
+    ])->prefix(
+        'admin'
+    )->group(function () {
+        Route::post('/create/news-api/credentials', [AdminController::class, 'storeNewsApiCredentials']);
+        Route::get('/news', [AdminController::class, 'getSourceNews']);
+        Route::get('/users/preferences/{id}', [AdminController::class, 'getUsersWithPreferences']);
+        Route::get('/details', [AdminController::class, 'getAdminDetails']);
+    });
 });

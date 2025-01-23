@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('api_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('source'); // Example: 'NewsAPI'
-            $table->string('endpoint'); // The specific endpoint hit
-            $table->json('request_data'); // Data sent in the request
-            $table->json('response_data'); // Response received
-            $table->boolean('success')->default(true);
+            $table->string('source');
+            $table->string('endpoint')->nullable();
+            $table->json('request_data')->nullable();
+            $table->json('response_data');
+            $table->boolean('success')->default(false);
             $table->timestamps();
         });
     }

@@ -3,22 +3,41 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use App\Services\ArticleFetcherService;
-use App\Models\Source;
+use App\Services\NewsSources\NewYorkTimesService;
+use App\Services\NewsSources\TheGuardianService;
+use App\Services\NewsSources\NewsAPIService;
+use App\Services\NewsSources\NewCredService;
 
 class FetchArticles extends Command
 {
-    protected $signature = 'fetch:articles';
-    protected $description = 'Fetch articles from configured sources';
+    protected $signature = 'news:update';
+    protected $description = 'Update news data from various sources';
 
-    public function handle(ArticleFetcherService $fetcher)
+    protected $newYorkTimesService;
+    protected $theGuardianService;
+    protected $newsAPIService;
+    protected $newCredService;
+
+    public function __construct(
+        NewYorkTimesService $newYorkTimesService,
+        TheGuardianService $theGuardianService,
+        NewsAPIService $newsAPIService,
+        NewCredService $newCredService
+    ) {
+        parent::__construct();
+        $this->newYorkTimesService = $newYorkTimesService;
+        $this->theGuardianService = $theGuardianService;
+        $this->newsAPIService = $newsAPIService;
+        $this->newCredService = $newCredService;
+    }
+
+    public function handle()
     {
-        $sources = Source::all();
-        foreach ($sources as $source) {
-            $articles = $fetcher->fetchArticlesFromSource($source);
-            // Process and store articles in the database
-        }
-
-        $this->info('Articles fetched successfully.');
+        $this->info('Starting news update...');
+        $this->newYorkTimesService->fetchNews();
+        $this->theGuardianService->fetchNews();
+        $this->newsAPIService->fetchNews();
+        $this->newCredService->fetchNews();
+        $this->info('News update completed.');
     }
 }

@@ -22,4 +22,12 @@ class UserRepository
     {
         return User::where('email', $email)->first();
     }
+
+    public function getUsersWithPreferences(string $id)
+    {
+        return User::where('id', $id)
+           // ->leftJoin('user_preferences', 'users.id', '=', 'user_preferences.user_id')
+            //->select('users.id', 'users.name', 'users.email', 'user_preferences.preference')
+            ->get();
+    }
 }

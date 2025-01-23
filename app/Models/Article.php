@@ -9,7 +9,7 @@ class Article extends Model
 {
     protected $table = 'articles';
     protected $fillable = [
-        'source_id',
+        'source',
         'title',
         'content',
         'author',
@@ -18,8 +18,4 @@ class Article extends Model
         'url',
     ];
 
-    public function source()
-    {
-        return $this->belongsTo(Source::class);
-    }
 }

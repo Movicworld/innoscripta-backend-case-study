@@ -31,4 +31,24 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'nyt' => [
+        'api_key' => env('NYT_API_KEY'),
+        'secret_key' => env('NYT_SECRET_KEY'),
+    ],
+
+    'guardian' => [
+        'api_key' => env('GUARDIAN_API_KEY'),
+    ],
+
+    'newsapi' => [
+        'api_key' => env('NEWSAPI_API_KEY'),
+    ],
+
+    'newcred' => [
+        'api_key' => env('NEWCRED_API_KEY'),
+    ],
+    'guzzle' => [
+        'verify' => false,
+    ],
+
 ];

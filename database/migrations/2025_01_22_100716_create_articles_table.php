@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use League\CommonMark\Reference\Reference;
 
 return new class extends Migration
 {
@@ -13,15 +14,17 @@ return new class extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('source_id')->constrained('sources')->onDelete('cascade');
-            $table->string('title');
+            $table->text('source');
+            $table->text('title')->unique();
             $table->text('content')->nullable();
             $table->string('author')->nullable();
             $table->string('category')->nullable();
             $table->timestamp('published_at');
-            $table->string('url');
+            $table->text('url')->nullable();
             $table->timestamps();
+            $table->foreign('category')->references('name')->on('categories')->onDelete('cascade');
         });
+
     }
 
     /**
