@@ -62,12 +62,18 @@ Innoscripta News Test is a Laravel-based application designed to fetch and manag
    php artisan key:generate
    ```
 
-5. Run migrations:
+5. Install Passport
+Passport is used for API authentication. Install and configure it as follows:
+    ```bash
+    php artisan passport:install
+    ```
+
+6. Run migrations:
    ```bash
    php artisan migrate
    ```
 
-6. Seed the database:
+7. Seed the database:
    ```bash
    php artisan db:seed
    ```
