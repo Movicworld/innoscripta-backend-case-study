@@ -44,7 +44,7 @@ Innoscripta News Test is a Laravel-based application designed to fetch and manag
 1. Clone the repository:
    ```bash
    git clone https://github.com/Movicworld/innoscripta-backend-case-study.git.
-   cd innoscripta-news-test
+   cd innoscripta-backend-case-study
    ```
 
 2. Install dependencies:
