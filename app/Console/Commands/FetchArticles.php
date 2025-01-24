@@ -6,7 +6,6 @@ use Illuminate\Console\Command;
 use App\Services\NewsSources\NewYorkTimesService;
 use App\Services\NewsSources\TheGuardianService;
 use App\Services\NewsSources\NewsAPIService;
-use App\Services\NewsSources\NewCredService;
 
 class FetchArticles extends Command
 {
@@ -16,19 +15,16 @@ class FetchArticles extends Command
     protected $newYorkTimesService;
     protected $theGuardianService;
     protected $newsAPIService;
-    protected $newCredService;
 
     public function __construct(
         NewYorkTimesService $newYorkTimesService,
         TheGuardianService $theGuardianService,
         NewsAPIService $newsAPIService,
-        NewCredService $newCredService
     ) {
         parent::__construct();
         $this->newYorkTimesService = $newYorkTimesService;
         $this->theGuardianService = $theGuardianService;
         $this->newsAPIService = $newsAPIService;
-        $this->newCredService = $newCredService;
     }
 
     public function handle()

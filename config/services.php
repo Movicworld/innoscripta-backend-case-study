@@ -44,11 +44,5 @@ return [
         'api_key' => env('NEWSAPI_API_KEY'),
     ],
 
-    'newcred' => [
-        'api_key' => env('NEWCRED_API_KEY'),
-    ],
-    'guzzle' => [
-        'verify' => false,
-    ],
 
 ];
