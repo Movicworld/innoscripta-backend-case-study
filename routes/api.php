@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ArticleController;
 use App\Http\Controllers\Api\Admin\AdminController;
+use App\Http\Controllers\Api\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,10 +25,12 @@ use App\Http\Controllers\Api\Admin\AdminController;
 Route::prefix(
     'v1'
 )->group(function () {
-
     Route::post('login', [AuthController::class, 'login']);
     Route::post('register', [AuthController::class, 'register']);
-    Route::get('/get-news', [ArticleController::class, 'news']);
+
+    Route::get('/articles/search', [ArticleController::class, 'searchArticles']);
+    Route::get('/articles/filters', [ArticleController::class, 'getFilterApparatus']);
+   // Route::get('/get-news', [ArticleController::class, 'news']); // to manually update the articles
 
     Route::middleware([
         'auth',
@@ -35,7 +38,8 @@ Route::prefix(
     ])->prefix(
         'user'
     )->group(function () {
-        Route::get('/details', [AuthController::class, 'details']);
+        Route::post('/preferences/{userId}', [UserController::class, 'updateUserPreferences']);
+        Route::get('/user-details', [AuthController::class, 'details']);
     });
 
     Route::middleware([
@@ -45,8 +49,10 @@ Route::prefix(
         'admin'
     )->group(function () {
         Route::post('/add/category', [AdminController::class, 'createCategory']);
+        Route::get('/categories', [AdminController::class, 'getCategories']);
         Route::get('/news', [AdminController::class, 'getSourceNews']);
-        Route::get('/users/preferences/{id}', [AdminController::class, 'getUsersWithPreferences']);
         Route::get('/details', [AdminController::class, 'getAdminDetails']);
+        Route::get('/users', [AdminController::class, 'getUsers']);
+        Route::get('/users/{id}', [AdminController::class, 'getUsers']);
     });
 });

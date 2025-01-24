@@ -23,11 +23,21 @@ class AdminServices
         $this->categoryRepository = $categoryRepository;
     }
 
-
-    public function getUsersWithPreferences($id)
+    public function getUsers($userId = null)
     {
-        return $this->userRepository->getUsersWithPreferences($id);
+        if ($userId) {
+            return $this->userRepository->getUserDetails($userId);
+        }
+
+
+        return $this->userRepository->getPaginatedUsers();
     }
+
+    public function getCategories()
+    {
+        return $this->categoryRepository->getCategories();
+    }
+
 
     public function getAdminDetails($admin)
     {

@@ -6,15 +6,21 @@ use App\Services\AuthService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
     protected $authService;
+    protected $userService;
 
-    public function __construct(AuthService $authService)
+
+
+    public function __construct(AuthService $authService,
+    UserService $userService)
     {
         $this->authService = $authService;
+        $this->userService = $userService;
     }
 
     // Register a new user
@@ -80,7 +86,7 @@ class AuthController extends Controller
     //   Get user details.
     public function details()
     {
-        $user = Auth::user();
+        $user = $this->userService->getUserDetails();
 
         if ($user) {
             return response()->json([

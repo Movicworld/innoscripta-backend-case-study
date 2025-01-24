@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers\Api\Admin;
+
 use App\Http\Controllers\Controller;
 use App\Services\Admin\AdminServices;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +17,6 @@ class AdminController extends Controller
     {
         $this->adminService = $adminService;
     }
-
 
     public function createCategory(Request $request)
     {
@@ -33,40 +34,49 @@ class AdminController extends Controller
         try {
             $category = $this->adminService->createCategory($validator->validated());
             return response()->json(['message' => 'Category created successfully', 'data' => $category], 201);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json(['error' => 'Failed to create category', 'message' => $e->getMessage()], 500);
         }
     }
 
-    public function getSourceNews()
+    public function getCategories()
     {
-
         try {
-            $news = $this->adminService->getSourceNews();
+            $categories = $this->adminService->getCategories();
 
             return response()->json([
                 'status' => true,
-                'message' => 'News fetched successfully.',
-                'data' => $news,
-            ]);
-        } catch (\Exception $e) {
+                'message' => 'Categories retrieved successfully',
+                'data' => $categories
+            ], 200);
+        } catch (Exception $e) {
             return response()->json([
                 'status' => false,
-                'message' => $e->getMessage(),
+                'message' => 'Failed to retrieve categories',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
 
-    public function getUsersWithPreferences($id)
+    public function getUsers($userId = null)
     {
-        $users = $this->adminService->getUsersWithPreferences($id);
+        try {
+            $users = $this->adminService->getUsers($userId);
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Users with preferences retrieved successfully.',
-            'data' => $users,
-        ]);
+            return response()->json([
+                'status' => true,
+                'message' => $userId ? 'User details retrieved successfully' : 'Users retrieved successfully',
+                'data' => $users
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to retrieve users',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
+
 
     public function getAdminDetails()
     {
@@ -78,7 +88,7 @@ class AdminController extends Controller
                 'message' => 'Admin details retrieved successfully.',
                 'data' => $admin,
             ]);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage(),

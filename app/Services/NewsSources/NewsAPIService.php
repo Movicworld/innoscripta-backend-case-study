@@ -34,7 +34,6 @@ class NewsAPIService
                 'apiKey' => $apiKey,
                 'language' => 'en',
                 'q' => strtolower($category->name),
-                'pageSize' => '5',
             ];
 
             $response = $this->httpClient->get($url, $queryParams);

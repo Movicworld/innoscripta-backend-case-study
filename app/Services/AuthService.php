@@ -4,9 +4,7 @@ namespace App\Services;
 
 use App\Repositories\UserRepository;
 use Exception;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Laravel\Passport\PersonalAccessTokenResult;
 
 
 class AuthService
