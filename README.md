@@ -43,7 +43,7 @@ Innoscripta News Test is a Laravel-based application designed to fetch and manag
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/innoscripta-news-test.git
+   git clone https://github.com/Movicworld/innoscripta-backend-case-study.git.
    cd innoscripta-news-test
    ```
 
@@ -67,7 +67,7 @@ Innoscripta News Test is a Laravel-based application designed to fetch and manag
    php artisan migrate
    ```
 
-6. Seed the database (if applicable):
+6. Seed the database:
    ```bash
    php artisan db:seed
    ```
@@ -121,7 +121,7 @@ NYT_API_KEY=your_nyt_api_key // f36d5669-69ec-46fb-a480-89c7f2ffea28
    ```
    On Windows, use Task Scheduler to set up the equivalent cron job.
 
-2. Ensure the scheduler includes the necessary tasks, such as:
+2. The scheduler includes the necessary task below:
    ```php
    $schedule->command('news:update')->hourly();
    ```
