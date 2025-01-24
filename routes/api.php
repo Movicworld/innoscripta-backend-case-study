@@ -30,7 +30,7 @@ Route::prefix(
 
     Route::get('/articles/search', [ArticleController::class, 'searchArticles']);
     Route::get('/articles/filters', [ArticleController::class, 'getFilterApparatus']);
-   // Route::get('/get-news', [ArticleController::class, 'news']); // to manually update the articles
+    Route::get('/get-news', [ArticleController::class, 'news']); // to manually update the articles
 
     Route::middleware([
         'auth',

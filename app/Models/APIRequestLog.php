@@ -9,11 +9,11 @@ class APIRequestLog extends Model
 {
     protected $table = 'api_logs';
     protected $fillable = [
-        'source_id',
+        'source',
         'endpoint',
-        'status_code',
-        'response_time',
-        'response_body',
+        'request_data',
+        'response_data',
+        'success',
     ];
 
     public function source()

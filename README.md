@@ -1,66 +1,176 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Project Name: Innoscripta News Test
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Table of Contents
+- [Introduction](#introduction)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Installation](#installation)
+- [Environment Variables](#environment-variables)
+- [Usage](#usage)
+  - [Running the Project](#running-the-project)
+  - [Scheduler Setup](#scheduler-setup)
+- [API Documentation](#api-documentation)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Introduction
+Innoscripta News Test is a Laravel-based application designed to fetch and manage articles from various third-party APIs. The system provides features such as user preferences for filtering articles, a robust logging system for API interactions, and efficient scheduling for periodic updates.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+---
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Features
+- **User Authentication:** Secure login and registration functionality.
+- **Article Management:** Fetch articles from third-party APIs and store them in the database.
+- **User Preferences:** Allow users to customize their preferences for authors, categories, and sources.
+- **Search Functionality:** Advanced search with filtering options based on user preferences.
+- **Scheduler:** Automates periodic tasks such as fetching new articles.
+- **API Logging:** Logs all interactions with third-party APIs for better debugging and tracking.
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Technologies Used
+- **Backend:** Laravel Framework
+- **Database:** MySQL
+- **Third-Party APIs:** NewsAPI.org, The Guardian API, New York Times API
+- **Scheduler:** Laravel Task Scheduler
+- **Authentication:** Laravel Passport
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/innoscripta-news-test.git
+   cd innoscripta-news-test
+   ```
 
-## Laravel Sponsors
+2. Install dependencies:
+   ```bash
+   composer install
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+3. Set up environment variables:
+   ```bash
+   cp .env.example .env
+   ```
 
-### Premium Partners
+4. Generate the application key:
+   ```bash
+   php artisan key:generate
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+5. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
+
+6. Seed the database (if applicable):
+   ```bash
+   php artisan db:seed
+   ```
+
+---
+
+## Environment Variables
+The `.env` file should include the following variables:
+
+```env
+APP_NAME=Innoscripta News Test
+APP_ENV=local
+APP_KEY=base64:...
+APP_DEBUG=true
+APP_URL=http://localhost
+
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_password
+
+PASSPORT_PERSONAL_ACCESS_CLIENT_ID=client_id
+PASSPORT_PERSONAL_ACCESS_CLIENT_SECRET=client_secret
+
+NEWS_API_KEY=your_news_api_key // W5dSaQ2k43aq3lZUmSU6pNUNzWZ5xFfl
+GUARDIAN_API_KEY=your_guardian_api_key // f36d5669-69ec-46fb-a480-89c7f2ffea28
+NYT_API_KEY=your_nyt_api_key // f36d5669-69ec-46fb-a480-89c7f2ffea28
+```
+
+---
+
+## Usage
+
+### Running the Project
+1. Start the local development server:
+   ```bash
+   php artisan serve --port=4281
+   ```
+
+2. Access the application at:
+   ```
+   http://localhost:4281
+   ```
+
+### Scheduler Setup
+1. Add the following command to your system's task scheduler to execute every minute:
+   ```bash
+   * * * * * php /path-to-project/artisan schedule:run >> /dev/null 2>&1
+   ```
+   On Windows, use Task Scheduler to set up the equivalent cron job.
+
+2. Ensure the scheduler includes the necessary tasks, such as:
+   ```php
+   $schedule->command('news:update')->hourly();
+   ```
+
+---
+
+## API Documentation
+Comprehensive API documentation is available via Postman and accessible through (https://documenter.getpostman.com/view/34201461/2sAYQfDUaH). The endpoints include:
+- **Search Articles:** Allows authenticated and unauthenticated users to search articles with filters.
+- **User Preferences:** Manage user preferences for authors, sources, and categories.
+- **Article Logs:** Access logs of third-party API responses.
+
+### Important Notes
+- The `searchArticles` endpoint accepts a token for filtering with user preferences. If no token is provided, the endpoint still works with general filters.
+
+---
+
+## Testing
+1. Run the test suite:
+   ```bash
+   php artisan test
+   ```
+
+2. Check test coverage and ensure all features are working as expected.
+
+---
 
 ## Contributing
+1. Fork the repository.
+2. Create a new branch:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add new feature"
+   ```
+4. Push to the branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Submit a pull request.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
 ## License
+This project is licensed under the [MIT License](LICENSE).
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+---
+
+Feel free to reach out with any questions or suggestions for improvement!
+

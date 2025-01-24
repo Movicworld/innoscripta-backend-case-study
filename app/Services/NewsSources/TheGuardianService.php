@@ -5,6 +5,7 @@ namespace App\Services\NewsSources;
 use App\Helpers\HttpClientHelper;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
+use App\Services\APILogService;
 use Exception;
 use Illuminate\Support\Facades\Log;
 
@@ -13,13 +14,17 @@ class TheGuardianService
     protected $httpClient;
     protected $articleRepository;
     protected $categoryRepository;
-    public function __construct(HttpClientHelper $httpClient,
-    ArticleRepository $articleRepository,
-    CategoryRepository $categoryRepository)
-    {
+    protected $apiLogService;
+    public function __construct(
+        HttpClientHelper $httpClient,
+        ArticleRepository $articleRepository,
+        CategoryRepository $categoryRepository,
+        APILogService $apiLogService
+    ) {
         $this->httpClient = $httpClient;
         $this->articleRepository = $articleRepository;
         $this->categoryRepository = $categoryRepository;
+        $this->apiLogService = $apiLogService;
     }
 
     // Fetch Articles from The Guardian API
@@ -36,6 +41,17 @@ class TheGuardianService
 
         try {
             $response = $this->httpClient->get($url, $queryParams);
+
+             //Log response
+            $sanitizedQueryParams = $queryParams;
+            unset($sanitizedQueryParams['api-key']);
+            $this->apiLogService->logRequest(
+                'The Guardian API',
+                $url,
+                $sanitizedQueryParams,
+                $response,
+                isset($response['response']['status']) && $response['response']['status'] === 'ok'
+            );
 
             if ($response && $response['response']['status'] === 'ok') {
                 $articles = [];
@@ -59,12 +75,10 @@ class TheGuardianService
                 // Save the articles using the repository
                 $this->articleRepository->saveArticles($articles);
             }
-
         } catch (Exception $e) {
             Log::error('HTTP GET Request Failed', ['url' => $url, 'error' => $e->getMessage()]);
         }
 
         return true;
     }
-
 }

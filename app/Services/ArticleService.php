@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Repositories\ArticleRepository;
 
-class ArticleServices
+class ArticleService
 {
     protected $articleRepository;
     public function __construct(ArticleRepository $articleRepository)

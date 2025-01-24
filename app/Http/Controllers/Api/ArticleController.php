@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Services\ArticleServices;
+use App\Services\ArticleService;
 use Illuminate\Http\Request;
 use App\Services\NewsSources\NewYorkTimesService;
 use App\Services\NewsSources\NewsAPIService;
@@ -17,19 +17,19 @@ class ArticleController extends Controller
     protected $newYorkTimesService;
     protected $newsAPIService;
     protected $theGuardianService;
-    protected $articleServices;
+    protected $articleService;
     protected $userServices;
     public function __construct(
         NewYorkTimesService $newYorkTimesService,
         NewsAPIService $newsAPIService,
         TheGuardianService $theGuardianService,
-        ArticleServices $articleServices,
+        ArticleService $articleService,
         UserService $userServices,
     ) {
         $this->newYorkTimesService = $newYorkTimesService;
         $this->newsAPIService = $newsAPIService;
         $this->theGuardianService = $theGuardianService;
-        $this->articleServices = $articleServices;
+        $this->articleService = $articleService;
         $this->userServices = $userServices;
     }
 
@@ -38,6 +38,12 @@ class ArticleController extends Controller
          $this->newYorkTimesService->fetchNews();
          $this->newsAPIService->fetchNews();
         $this->theGuardianService->fetchNews();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Articles retrieved from Third party successfully',
+        ], 200);
+
     }
 
     public function searchArticles(Request $request)
@@ -57,7 +63,7 @@ class ArticleController extends Controller
             'author' => $userPreferences->preferred_authors ?? null,
         ], $filters);
     }
-            $articles = $this->articleServices->searchArticles($filters);
+            $articles = $this->articleService->searchArticles($filters);
 
             return response()->json([
                 'status' => true,
@@ -77,7 +83,7 @@ class ArticleController extends Controller
     {
         try {
             // Fetch the filter apparatus
-            $filters = $this->articleServices->getFilters();
+            $filters = $this->articleService->getFilters();
 
             return response()->json([
                 'status' => true,
